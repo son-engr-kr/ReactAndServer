@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
+
+import Button from '@mui/material/Button';
+
+
 interface StateTestProps{
   message:string
   message2:number
@@ -18,15 +22,19 @@ function App() {
   // },[])
 
   ////axios
-  useEffect(()=>{
-    axios.get('http://localhost:8000').then((responce) =>
-    setStateTest(responce.data.message) )
-  },[])
+  // useEffect(()=>{
+  //   axios.get('http://localhost:8000').then((responce) =>
+  //   setStateTest(responce.data.message) )
+  // },[])
+
+
   return (
     <>
       <h4>Hello this is react</h4>
       <p>data from fastapi: {stateTest}</p>
       <MyTag message = {"mmmm"} message2 = {321}></MyTag>
+
+      <Button>ButtonTest</Button>
     </>
   );
 }
@@ -34,7 +42,7 @@ function App() {
 function MyTag({message, message2}:Readonly<StateTestProps>){
   return (
     <>
-      {message} {message2}
+      <p>{message} {message2}</p>
     </>
   )
 }
