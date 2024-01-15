@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 # bash:
 # cd fastapi_server
-# uvicorn fastapi_main:app --reload
+# uvicorn fastapi_main:fast_app --reload
 fast_app = FastAPI()
 
 origins = [
