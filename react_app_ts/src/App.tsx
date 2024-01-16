@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { Container } from '@mui/material';
 
 
 interface StateTestProps{
@@ -30,13 +31,13 @@ function App() {
 
 
   return (
-    <>
+    <Container fixed = {true}>
       <h4>Hello this is react</h4>
       <p>data from fastapi: {stateTest}</p>
       <MyTag message = {"mmmm"} message2 = {321}></MyTag>
 
       <MUIButtons></MUIButtons>
-    </>
+    </Container>
   );
 }
 function MUIButtons(){
