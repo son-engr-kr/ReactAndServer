@@ -5,6 +5,7 @@ import './App.css';
 import axios from 'axios';
 
 import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 interface StateTestProps{
@@ -34,11 +35,22 @@ function App() {
       <p>data from fastapi: {stateTest}</p>
       <MyTag message = {"mmmm"} message2 = {321}></MyTag>
 
-      <Button>ButtonTest</Button>
+      <MUIButtons></MUIButtons>
     </>
   );
 }
+function MUIButtons(){
+  return (<>
+    <ButtonGroup>
 
+      <Button variant='outlined'>Create</Button>
+      <Button variant='outlined'>Update</Button>
+
+    </ButtonGroup>
+    <Button variant='outlined'>Delete</Button>
+
+  </>)
+}
 function MyTag({message, message2}:Readonly<StateTestProps>){
   return (
     <>
