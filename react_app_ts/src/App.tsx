@@ -1,12 +1,21 @@
 //npm start --prefix react_app_ts
 
 import React, { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import './App.css';
 import axios from 'axios';
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { Container } from '@mui/material';
+import { Container, Grid, Paper, Box } from '@mui/material';
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 
 interface StateTestProps{
@@ -37,6 +46,7 @@ function App() {
       <MyTag message = {"mmmm"} message2 = {321}></MyTag>
 
       <MUIButtons></MUIButtons>
+      <MUIGrid></MUIGrid>
     </Container>
   );
 }
@@ -49,8 +59,29 @@ function MUIButtons(){
 
     </ButtonGroup>
     <Button variant='outlined'>Delete</Button>
-
+    
   </>)
+}
+function MUIGrid(){
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <CustomPaper>xs=8</CustomPaper>
+        </Grid>
+        <Grid item xs={4}>
+          <CustomPaper>xs=4</CustomPaper>
+        </Grid>
+        <Grid item xs={4}>
+          <CustomPaper>xs=4</CustomPaper>
+        </Grid>
+        <Grid item xs={8}>
+          <CustomPaper>xs=8</CustomPaper>
+        </Grid>
+      </Grid>
+      
+    </Box>
+  )
 }
 function MyTag({message, message2}:Readonly<StateTestProps>){
   return (
