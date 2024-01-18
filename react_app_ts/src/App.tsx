@@ -6,8 +6,7 @@ import './App.css';
 import axios from 'axios';
 
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import { Container, Grid, Paper, Box } from '@mui/material';
+import { ButtonGroup, Container, Grid, Paper, Box, Autocomplete, TextField } from '@mui/material';
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -47,6 +46,7 @@ function App() {
 
       <MUIButtons></MUIButtons>
       <MUIGrid></MUIGrid>
+      <MyAutocomplete></MyAutocomplete>
     </Container>
   );
 }
@@ -89,6 +89,30 @@ function MyTag({message, message2}:Readonly<StateTestProps>){
       <p>{message} {message2}</p>
     </>
   )
+}
+
+function MyAutocomplete() {
+  const top100Films = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+    { label: 'The Godfather: Part II', year: 1974 },
+    { label: 'The Dark Knight', year: 2008 },
+    { label: '12 Angry Men', year: 1957 },
+    { label: "Schindler's List", year: 1993 },
+    { label: 'Pulp Fiction', year: 1994 },]
+
+    const testLabel = "this_is_test_label"
+    const testYear = 1234
+    top100Films.push({label:testLabel, year:testYear})
+  return (
+    <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      options={top100Films}
+      sx={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Movie" />}
+    />
+  );
 }
 
 export default App;
