@@ -22,10 +22,7 @@ const CustomPaper = styled(Paper)(({ theme }) => ({
 }));
 
 
-interface StateTestProps{
-  message:string
-  message2:number
-}
+
 
 function App() {
   const [stateTest, setStateTest] = useState<string>();
@@ -50,7 +47,8 @@ function App() {
     <Container fixed = {true}>
       <h4>Hello this is react</h4>
       <p>data from fastapi: {stateTest}</p>
-      <MyTag message = {"mmmm"} message2 = {321}></MyTag>
+      <MyTagWithInterfaceProps message = {"MyTagWithInterfaceProps"} message2 = {321}></MyTagWithInterfaceProps>
+      <MyTagWithJustProps message = {"MyTagWithJustProps"} message2 = {"message2"}></MyTagWithJustProps>
 
       <MUIButtons></MUIButtons>
       <MUIGrid></MUIGrid>
@@ -135,13 +133,25 @@ function MUIGrid(){
     </Box>
   )
 }
-function MyTag({message, message2}:Readonly<StateTestProps>){
+interface StateTestProps{
+  message:string
+  message2:number
+}
+function MyTagWithInterfaceProps({message, message2}:Readonly<StateTestProps>){
   return (
     <>
       <p>{message} {message2}</p>
     </>
   )
 }
+function MyTagWithJustProps({message, message2}:{message:string,message2:string}){
+  return (
+    <>
+      <p>{message} {message2}</p>
+    </>
+  )
+}
+
 
 function MyAutocomplete() {
   const top100Films = [
