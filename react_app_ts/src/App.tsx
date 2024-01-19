@@ -8,6 +8,11 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import { ButtonGroup, Container, Grid, Paper, Box, Autocomplete, TextField } from '@mui/material';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import DraggableCard from './drag_and_drop/DraggableCard';
+import DropZone from './drag_and_drop/DropZone';
+
 const CustomPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -37,6 +42,9 @@ function App() {
   //   setStateTest(responce.data.message) )
   // },[])
 
+  const handleDrop = (cardId: string) => {
+    console.log(`Dropped: ${cardId}`);
+  };
 
   return (
     <Container fixed = {true}>
@@ -47,8 +55,37 @@ function App() {
       <MUIButtons></MUIButtons>
       <MUIGrid></MUIGrid>
       <MyAutocomplete></MyAutocomplete>
+      <MyDnD></MyDnD>
     </Container>
   );
+}
+function MyDnD(){
+  const [cards, setCards] = useState([
+    { id: 'card1', text: 'Card 1', zone: 1 },
+    { id: 'card2', text: 'Card 2', zone: 2 }
+  ]);
+
+  const moveCard = (cardId: string, zone: number) => {
+    setCards(cards.map(card => 
+      card.id === cardId ? { ...card, zone } : card
+    ));
+  };
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', padding: '30px' }}>
+        <DropZone zone={1} onDrop={moveCard}>
+          {cards.filter(card => card.zone === 1).map(card => (
+            <DraggableCard key={card.id} id={card.id} text={card.text} />
+          ))}
+        </DropZone>
+        <DropZone zone={2} onDrop={moveCard}>
+          {cards.filter(card => card.zone === 2).map(card => (
+            <DraggableCard key={card.id} id={card.id} text={card.text} />
+          ))}
+        </DropZone>
+      </div>
+    </DndProvider>
+  )
 }
 function MUIButtons(){
   return (<>
