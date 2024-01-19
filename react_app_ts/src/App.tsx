@@ -65,27 +65,42 @@ function MyDnD(){
     { id: 'card2', text: 'Card 2', zone: 2 }
   ]);
 
-  const moveCard = (cardId: string, zone: number) => {
-    setCards(cards.map(card => 
-      card.id === cardId ? { ...card, zone } : card
-    ));
+  const moveCard = (draggedId: string, targetId: string, targetZone: number) => {
+    setCards((prevCards) => {
+      const draggedCard = prevCards.find(card => card.id === draggedId);
+      const targetIndex = prevCards.findIndex(card => card.id === targetId && card.zone === targetZone);
+      
+      if (!draggedCard) return prevCards;
+      
+      const updatedCards = prevCards.filter(card => card.id !== draggedId);
+      if (targetIndex >= 0) {
+        // 타겟 카드가 있는 경우 그 위치에 드래그된 카드를 삽입
+        updatedCards.splice(targetIndex, 0, { ...draggedCard, zone: targetZone });
+      } else {
+        // 타겟 카드가 없는 경우 새로운 존에 추가
+        updatedCards.push({ ...draggedCard, zone: targetZone });
+      }
+
+      return updatedCards;
+    });
   };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div style={{ display: 'flex', justifyContent: 'space-around', padding: '30px' }}>
         <DropZone zone={1} onDrop={moveCard}>
           {cards.filter(card => card.zone === 1).map(card => (
-            <DraggableCard key={card.id} id={card.id} text={card.text} />
+            <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={1} moveCard={moveCard}/>
           ))}
         </DropZone>
         <DropZone zone={2} onDrop={moveCard}>
           {cards.filter(card => card.zone === 2).map(card => (
-            <DraggableCard key={card.id} id={card.id} text={card.text} />
+            <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={2} moveCard={moveCard}/>
           ))}
         </DropZone>
       </div>
     </DndProvider>
-  )
+  );
 }
 function MUIButtons(){
   return (<>
