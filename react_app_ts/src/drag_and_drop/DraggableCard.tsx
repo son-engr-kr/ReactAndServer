@@ -38,7 +38,8 @@ const DraggableCard: React.FC<DraggableCardProps> = ({ id, text, targetZone, mov
 
   return (
     <div className={`draggable-card ${isDragging ? 'hover' : ''}`} ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1, cursor: 'move' }}>
-      {text}
+      <h4 style={{color:"#FFFFFF"}}>{text}</h4>
+      <p style={{color:"#FFFFFF"}}>hello there this is card!</p>
     </div>
   );
 };
