@@ -8,8 +8,11 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import { ButtonGroup, Container, Grid, Paper, Box, Autocomplete, TextField } from '@mui/material';
 
+import { isMobile } from 'react-device-detect';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import {TouchBackend} from 'react-dnd-touch-backend';
+
 import DraggableCard from './drag_and_drop/DraggableCard';
 import DropZone from './drag_and_drop/DropZone';
 
@@ -159,7 +162,7 @@ function MyDnD(){
       <p>draggedId: {draggedIdState}</p>
       <p>targetId: {targetIdState}</p>
       <p>targetZone: {targetZoneState}</p>
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
         <div style={{ display: 'flex', justifyContent: 'space-around', padding: '30px' }}>
           <DropZone zone={1} onDrop={dropCardInZone} onHover={hoverCardOnZone}>
             {cards.filter(card => card.zone === 1).map(card => (
