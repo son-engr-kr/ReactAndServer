@@ -14,13 +14,22 @@ const DraggableCard: React.FC<DraggableCardProps> = ({ id, text, targetZone, mov
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
+    end: (item:{id:string}) =>{
+      console.log(`in DraggableCard.useDrag.end, id:${id}`)
+    }
   });
 
   const [, drop] = useDrop({
     accept: 'CARD',
     hover: (item: { id: string }) => {
       if (item.id !== id) {
+        console.log(`DraggableCard-hover-item.id(${item.id}) !== id${id}`);
+        //드래그 중에 다른 카드 위에 놓이게 되면
         moveCard(item.id, id, targetZone);
+      }
+      else{
+        console.log(`DraggableCard-hover-item.id(${item.id}) === id${id}`);
+
       }
     },
   });

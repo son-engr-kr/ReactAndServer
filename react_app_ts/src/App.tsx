@@ -60,44 +60,108 @@ function App() {
 function MyDnD(){
   const [cards, setCards] = useState([
     { id: 'card1', text: 'Card 1', zone: 1 },
-    { id: 'card2', text: 'Card 2', zone: 2 }
+    { id: 'card2', text: 'Card 2', zone: 1 },
+    { id: 'card3', text: 'Card 3', zone: 1 },
+    { id: 'card4', text: 'Card 4', zone: 2 },
+    { id: 'card5', text: 'Card 5', zone: 2 },
   ]);
-
+  // setCards([...cards])
+  const [draggedIdState, setDraggedIdState] = useState<string>()
+  const [targetIdState, setTargetIdState] = useState<string>()
+  const [targetZoneState, settargetZoneState] = useState<number>()
   const moveCard = (draggedId: string, targetId: string, targetZone: number) => {
+    // setDraggedIdState(draggedId)
+    // setTargetIdState(targetId)
+    // settargetZoneState(targetZone)
+    console.log(`moveCard-draggedId:${draggedId},targetId:${targetId},targetZone:${targetZone}`)
+    
     setCards((prevCards) => {
+      console.log(`moveCard-prevCards: ${prevCards.map(card => card.id).join(' ')}, draggedId:${draggedId}, targetId:${targetId}`);
+
       const draggedCard = prevCards.find(card => card.id === draggedId);
       const targetIndex = prevCards.findIndex(card => card.id === targetId && card.zone === targetZone);
       
-      if (!draggedCard) return prevCards;
+      if (!draggedCard){
+        console.log("moveCard-no draggedCard")
+        return prevCards
+      }
       
       const updatedCards = prevCards.filter(card => card.id !== draggedId);
       if (targetIndex >= 0) {
         // 타겟 카드가 있는 경우 그 위치에 드래그된 카드를 삽입
         updatedCards.splice(targetIndex, 0, { ...draggedCard, zone: targetZone });
-      } else {
+        console.log(`moveCard-splice, targetIndex:${targetIndex}`)
+      }
+      else {
         // 타겟 카드가 없는 경우 새로운 존에 추가
+        console.log(`moveCard-push, targetIndex:${targetIndex}`)
+
         updatedCards.push({ ...draggedCard, zone: targetZone });
       }
+      console.log(`moveCard-updatedCards: ${updatedCards.map(card => card.id).join(' ')}`);
 
       return updatedCards;
     });
   };
+  const dropCard = (draggedId: string, targetZone: number) => {
+    // setDraggedIdState(draggedId)
+    // setTargetIdState(targetId)
+    // settargetZoneState(targetZone)
+    
+    
+    console.log(`dropCard-draggedId:${draggedId},targetZone:${targetZone}`)
+    setCards((prevCards) => {
+      const draggedCard = prevCards.find(card => card.id === draggedId);
+      if (!draggedCard){
+        console.log("dropCard-no draggedCard")
+        return prevCards
+      }
+      const updatedCards = prevCards.filter(card => card.id !== draggedId);
+      if(draggedCard?.zone === targetZone){
+        return prevCards;
+      }
+      else{//drop하는 곳에 내 card가 없을 경우
+        updatedCards.push({ ...draggedCard, zone: targetZone });
+        return updatedCards;
+      }
+      // console.log(`dropCard-prevCards: ${prevCards.map(card => card.id).join(' ')}, draggedId:${draggedId}`);
+
+      // const updatedCards = prevCards.filter(card => card.id !== draggedId);
+
+    });
+  };
+
+  const hoverCard = (draggedId: string, targetId: string, targetZone: number) => {
+    console.log(`hoverCard - draggedId:${draggedId},targetId:${targetId},targetZone:${targetZone}`)
+    
+  };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div style={{ display: 'flex', justifyContent: 'space-around', padding: '30px' }}>
-        <DropZone zone={1} onDrop={moveCard}>
-          {cards.filter(card => card.zone === 1).map(card => (
-            <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={1} moveCard={moveCard}/>
-          ))}
-        </DropZone>
-        <DropZone zone={2} onDrop={moveCard}>
-          {cards.filter(card => card.zone === 2).map(card => (
-            <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={2} moveCard={moveCard}/>
-          ))}
-        </DropZone>
-      </div>
-    </DndProvider>
+    <>
+      <p>draggedId: {draggedIdState}</p>
+      <p>targetId: {targetIdState}</p>
+      <p>targetZone: {targetZoneState}</p>
+      <DndProvider backend={HTML5Backend}>
+        <div style={{ display: 'flex', justifyContent: 'space-around', padding: '30px' }}>
+          <DropZone zone={1} onDrop={dropCard} onHover={hoverCard}>
+            {cards.filter(card => card.zone === 1).map(card => (
+              <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={1} moveCard={moveCard}/>
+            ))}
+          </DropZone>
+          <DropZone zone={2} onDrop={dropCard} onHover={hoverCard}>
+            {cards.filter(card => card.zone === 2).map(card => (
+              <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={2} moveCard={moveCard}/>
+            ))}
+          </DropZone>
+          <DropZone zone={3} onDrop={dropCard} onHover={hoverCard}>
+            {cards.filter(card => card.zone === 3).map(card => (
+              <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={3} moveCard={moveCard}/>
+            ))}
+          </DropZone>
+        </div>
+      </DndProvider>
+    </>
+    
   );
 }
 function MUIButtons(){

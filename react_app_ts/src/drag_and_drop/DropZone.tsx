@@ -3,19 +3,24 @@ import { useDrop } from 'react-dnd';
 
 interface DropZoneProps {
   zone: number;
-  onDrop: (draggedId: string, targetId: string, targetZone: number) => void;
+  onHover: (draggedId: string, targetId: string, targetZone: number) => void;
+  onDrop: (draggedId: string, targetZone: number) => void;
   children: React.ReactNode;
 }
 
-const DropZone: React.FC<DropZoneProps> = ({ zone, onDrop, children }) => {
+const DropZone: React.FC<DropZoneProps> = ({ zone, onDrop, onHover, children }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'CARD',
     drop: (item: { id: string }) => {
-      onDrop(item.id, '', zone);
+      onDrop(item.id, zone);
+    },
+    hover: (item:{id:string}) => {
+      onHover(item.id, '', zone)
     },
     collect: monitor => ({
       isOver: monitor.isOver(),
     }),
+    
   });
 
   return (
