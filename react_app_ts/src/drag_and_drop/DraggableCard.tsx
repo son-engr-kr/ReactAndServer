@@ -17,7 +17,7 @@ const DraggableCard: React.FC<DraggableCardProps> = ({ id, text, targetZone, mov
     }),
     end: (item:{id:string}) =>{
       console.log(`in DraggableCard.useDrag.end, id:${id}`)
-    }
+    },
   });
 
   const [, drop] = useDrop({

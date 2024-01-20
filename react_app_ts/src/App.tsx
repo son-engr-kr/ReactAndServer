@@ -60,14 +60,24 @@ function App() {
     </Container>
   );
 }
+interface CardInfo{
+  id: string;
+  text: string;
+  zone: number;
+};
 function MyDnD(){
-  const [cards, setCards] = useState([
-    { id: 'card1', text: 'Card 1', zone: 1 },
-    { id: 'card2', text: 'Card 2', zone: 1 },
-    { id: 'card3', text: 'Card 3', zone: 1 },
-    { id: 'card4', text: 'Card 4', zone: 2 },
-    { id: 'card5', text: 'Card 5', zone: 2 },
-  ]);
+  const [cards, setCards] = useState<CardInfo[]>([]);
+  useEffect(() => {
+    // 초기 카드 상태 설정
+    //useEffect에서 안하고 useState에서 바로 초기화하면 초기 드래그 시에 오동작 한다.
+    setCards([
+      { id: 'card1', text: 'Card 1', zone: 1 },
+      { id: 'card2', text: 'Card 2', zone: 1 },
+      { id: 'card3', text: 'Card 3', zone: 1 },
+      { id: 'card4', text: 'Card 4', zone: 2 },
+      { id: 'card5', text: 'Card 5', zone: 2 },
+    ]);
+  }, []);
   // setCards([...cards])
   const [draggedIdState, setDraggedIdState] = useState<string>()
   const [targetIdState, setTargetIdState] = useState<string>()
