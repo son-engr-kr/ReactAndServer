@@ -28,6 +28,7 @@ const DraggableCard: React.FC<DraggableCardProps> = ({ id, text, targetZone, mov
         moveCard(item.id, id, targetZone);
       }
       else{
+        //같은 카드 위에 놓이게 되면
         console.log(`DraggableCard-hover-item.id(${item.id}) === id${id}`);
 
       }

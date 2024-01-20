@@ -103,7 +103,7 @@ function MyDnD(){
       return updatedCards;
     });
   };
-  const dropCard = (draggedId: string, targetZone: number) => {
+  const dropCardInZone = (draggedId: string, targetZone: number) => {
     // setDraggedIdState(draggedId)
     // setTargetIdState(targetId)
     // settargetZoneState(targetZone)
@@ -131,9 +131,27 @@ function MyDnD(){
     });
   };
 
-  const hoverCard = (draggedId: string, targetId: string, targetZone: number) => {
-    console.log(`hoverCard - draggedId:${draggedId},targetId:${targetId},targetZone:${targetZone}`)
-    
+  const hoverCardOnZone = (draggedId: string, targetZone: number) => {
+    console.log(`hoverCard - draggedId:${draggedId}, targetZone:${targetZone}`)
+    setCards((prevCards) => {
+      const draggedCard = prevCards.find(card => card.id === draggedId);
+      if (!draggedCard){
+        console.log("dropCard-no draggedCard")
+        return prevCards
+      }
+      const updatedCards = prevCards.filter(card => card.id !== draggedId);
+      if(draggedCard?.zone === targetZone){
+        return prevCards;
+      }
+      else{//drop하는 곳에 내 card가 없을 경우
+        updatedCards.push({ ...draggedCard, zone: targetZone });
+        return updatedCards;
+      }
+      // console.log(`dropCard-prevCards: ${prevCards.map(card => card.id).join(' ')}, draggedId:${draggedId}`);
+
+      // const updatedCards = prevCards.filter(card => card.id !== draggedId);
+
+    });
   };
 
   return (
@@ -143,17 +161,17 @@ function MyDnD(){
       <p>targetZone: {targetZoneState}</p>
       <DndProvider backend={HTML5Backend}>
         <div style={{ display: 'flex', justifyContent: 'space-around', padding: '30px' }}>
-          <DropZone zone={1} onDrop={dropCard} onHover={hoverCard}>
+          <DropZone zone={1} onDrop={dropCardInZone} onHover={hoverCardOnZone}>
             {cards.filter(card => card.zone === 1).map(card => (
               <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={1} moveCard={moveCard}/>
             ))}
           </DropZone>
-          <DropZone zone={2} onDrop={dropCard} onHover={hoverCard}>
+          <DropZone zone={2} onDrop={dropCardInZone} onHover={hoverCardOnZone}>
             {cards.filter(card => card.zone === 2).map(card => (
               <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={2} moveCard={moveCard}/>
             ))}
           </DropZone>
-          <DropZone zone={3} onDrop={dropCard} onHover={hoverCard}>
+          <DropZone zone={3} onDrop={dropCardInZone} onHover={hoverCardOnZone}>
             {cards.filter(card => card.zone === 3).map(card => (
               <DraggableCard key={card.id} id={card.id} text={card.text} targetZone={3} moveCard={moveCard}/>
             ))}

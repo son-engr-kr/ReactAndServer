@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd';
 
 interface DropZoneProps {
   zone: number;
-  onHover: (draggedId: string, targetId: string, targetZone: number) => void;
+  onHover: (draggedId: string, targetZone: number) => void;
   onDrop: (draggedId: string, targetZone: number) => void;
   children: React.ReactNode;
 }
@@ -15,7 +15,7 @@ const DropZone: React.FC<DropZoneProps> = ({ zone, onDrop, onHover, children }) 
       onDrop(item.id, zone);
     },
     hover: (item:{id:string}) => {
-      onHover(item.id, '', zone)
+      onHover(item.id, zone)
     },
     collect: monitor => ({
       isOver: monitor.isOver(),
