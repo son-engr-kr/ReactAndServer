@@ -116,11 +116,11 @@ function MyDnD(){
         console.log("dropCard-no draggedCard")
         return prevCards
       }
-      const updatedCards = prevCards.filter(card => card.id !== draggedId);
       if(draggedCard?.zone === targetZone){
         return prevCards;
       }
       else{//drop하는 곳에 내 card가 없을 경우
+        const updatedCards = prevCards.filter(card => card.id !== draggedId);
         updatedCards.push({ ...draggedCard, zone: targetZone });
         return updatedCards;
       }
@@ -139,11 +139,11 @@ function MyDnD(){
         console.log("dropCard-no draggedCard")
         return prevCards
       }
-      const updatedCards = prevCards.filter(card => card.id !== draggedId);
       if(draggedCard?.zone === targetZone){
         return prevCards;
       }
-      else{//drop하는 곳에 내 card가 없을 경우
+      else{//hover하는 곳에 내 card가 없을 경우
+        const updatedCards = prevCards.filter(card => card.id !== draggedId);
         updatedCards.push({ ...draggedCard, zone: targetZone });
         return updatedCards;
       }
