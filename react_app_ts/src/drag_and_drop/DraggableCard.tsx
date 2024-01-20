@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDrag, useDrop, DragSourceMonitor } from 'react-dnd';
+import './dragAndDropStyles.css';
 
 interface DraggableCardProps {
   id: string;
@@ -36,7 +37,7 @@ const DraggableCard: React.FC<DraggableCardProps> = ({ id, text, targetZone, mov
   });
 
   return (
-    <div ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1, cursor: 'move' }}>
+    <div className={`draggable-card ${isDragging ? 'hover' : ''}`} ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1, cursor: 'move' }}>
       {text}
     </div>
   );

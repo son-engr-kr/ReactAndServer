@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
+import './dragAndDropStyles.css';
 
 interface DropZoneProps {
   zone: number;
@@ -24,7 +25,7 @@ const DropZone: React.FC<DropZoneProps> = ({ zone, onDrop, onHover, children }) 
   });
 
   return (
-    <div ref={drop} style={{ width: '200px', height: '200px', backgroundColor: isOver ? 'lightblue' : 'grey' }}>
+    <div className={`drop-zone ${isOver ? 'over' : ''}`} ref={drop}>
       {children}
     </div>
   );

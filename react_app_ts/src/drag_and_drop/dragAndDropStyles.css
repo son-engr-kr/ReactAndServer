@@ -1,0 +1,37 @@
+/* DropZone style */
+.drop-zone {
+    width: 600px;
+    height: 300px;
+    border: 2px dashed #00ffff;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #00eeee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    overflow-y: auto;
+  }
+  .drop-zone.over {
+    background-color: lightblue;
+  }
+  
+  /* DraggableCard style */
+  .draggable-card {
+    width: 90%;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    text-align: center;
+    cursor: 'move';
+  }
+  
+  .draggable-card:hover {
+    border-color: #ff0000;
+    opacity:0.5;
+    cursor: 'move';
+  }
